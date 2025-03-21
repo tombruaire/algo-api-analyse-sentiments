@@ -1,5 +1,5 @@
 flask
-textblob
 python-dotenv
 transformers
+torch
 mysql-connector-python

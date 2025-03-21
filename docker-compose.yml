@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  flask_api:
+    build: ./api-flask
+    ports:
+      - "${PORT}:${PORT}"
+    env_file:
+      - .env
+    volumes:
+      - ./api-flask:/app
+    restart: always
