@@ -1,4 +1,5 @@
 import os
+import re
 from flask import Flask, jsonify, request
 from transformers import pipeline
 from dotenv import load_dotenv
@@ -10,6 +11,10 @@ app = Flask(__name__)
 
 # Utiliser le pipeline de Hugging Face pour l'analyse de sentiment
 sentiment_analyser = pipeline("sentiment-analysis")
+
+# Définir les longueurs minimale et maximale des tweets
+MIN_TWEET_LENGTH = 5
+MAX_TWEET_LENGTH = 280
 
 def get_sentiment_score(tweet):
     """Utilise un modèle multilingue pour analyser le sentiment du tweet"""
@@ -45,10 +50,20 @@ def analyse_sentiment_route():
     for index, tweet in enumerate(data):
         # Vérification que chaque tweet est une chaîne de caractères
         if isinstance(tweet, str):
-            sentiment_score = get_sentiment_score(tweet)
-            sentiment_resultat[f"tweet{index+1}"] = sentiment_score
+            tweet_length = len(tweet)
+            if tweet_length < MIN_TWEET_LENGTH:
+                sentiment_resultat[f"tweet{index+1}"] = "Erreur: le tweet est trop court (min 5 caractères)."
+            elif tweet_length > MAX_TWEET_LENGTH:
+                sentiment_resultat[f"tweet{index+1}"] = "Erreur: le tweet est trop long (max 280 caractères)."
+            elif re.match(r'^[\d\s]+$', tweet):
+                sentiment_resultat[f"tweet{index+1}"] = "Erreur: le tweet ne doit contenir que des lettres et des espaces."
+            elif not re.match(r'^[\wÀ-ÿ\s.,!?\'"-]+$', tweet, re.UNICODE):
+                sentiment_resultat[f"tweet{index+1}"] = "Erreur: le tweet ne doit contenir que des lettres et des espaces."
+            else:
+                sentiment_score = get_sentiment_score(tweet)
+                sentiment_resultat[f"tweet{index+1}"] = sentiment_score
         else:
-            sentiment_resultat[f"tweet{index+1}"] = "Erreur: Tweet non valide"
+            sentiment_resultat[f"tweet{index+1}"] = "Erreur: Tweet non valide, Veuillez fournir un text valide"
 
     return jsonify(sentiment_resultat)
 
