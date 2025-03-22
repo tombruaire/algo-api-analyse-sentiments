@@ -3,11 +3,14 @@ import re
 from flask import Flask, jsonify, request
 from transformers import pipeline
 from dotenv import load_dotenv
+from logistic_model import predict_sentiment
+from flask_cors import CORS
 
 # Charger les variables d'environnement
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 
 # Utiliser le pipeline de Hugging Face pour l'analyse de sentiment
 sentiment_analyser = pipeline("sentiment-analysis")
@@ -67,8 +70,24 @@ def analyse_sentiment_route():
 
     return jsonify(sentiment_resultat)
 
+@app.route('/api/logistic_regression_sentiment', methods=['POST'])
+def logistic_regression_sentiment():
+    data = request.get_json()
+
+    if not data or not isinstance(data, list):
+        return jsonify({"error": "La requête doit contenir une liste de tweets."}), 400
+
+    try:
+        predictions = predict_sentiment(data)
+        resultat = {f"tweet{i+1}": predictions[i] for i in range(len(predictions))}
+        return jsonify(resultat)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
     # Lancer l'application Flask sur le port spécifié ou par défaut
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 5001))
     debug_mode = os.getenv("FLASK_DEBUG", "True").lower() == "true"
     app.run(debug=debug_mode, host="0.0.0.0", port=port)
+
+

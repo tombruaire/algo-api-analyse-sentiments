@@ -11,7 +11,13 @@ ENV FLASK_DEBUG=${FLASK_DEBUG}
 
 COPY requirements.txt .
 
-RUN pip install --no-cache-dir -r requirements.txt
+# Installer d'abord les bibliothèques lourdes
+RUN pip install flask-cors
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir torch transformers
+
+# Installer ensuite les bibliothèques rapides
+RUN pip install --no-cache-dir flask python-dotenv mysql-connector-python scikit-learn pandas numpy matplotlib seaborn
 
 COPY . .
 
