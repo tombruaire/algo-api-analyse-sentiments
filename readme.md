@@ -55,7 +55,7 @@ python model_training.py
 
 ## À savoir sur le modèle Hugging Face
 
-Le modèle distilbert-base-uncased-finetuned-sst-2-english est entraîné sur des textes en anglais uniquement.
+Le modèle est entraîné sur des textes en anglais uniquement.
 👉 Pour obtenir une analyse de sentiment cohérente, les tweets envoyés à l’API doivent donc être en anglais.
 
 ```bash
