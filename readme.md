@@ -35,3 +35,35 @@ Une fois les conteneurs démarrés, exécute cette commande dans un nouveau term
 docker exec -it flask-api python3 db/create_table.py
 ```
 ✅ Un message Table 'tweets' créée avec succès. doit s'afficher.
+
+#  Entraîner un modèle et générer la matrice de confusion
+
+Un script est disponible pour entraîner un modèle de régression logistique sur les tweets déjà enregistrés dans la base de données et générer une matrice de confusion.
+
+### 1. Depuis le dossier src, exécuter :
+
+```bash
+cd ../src
+python model_training.py
+```
+
+✅ Le modèle s'entraîne automatiquement
+
+✅ Une matrice de confusion est affichée
+
+✅ Une image src/matrice_confusion.png est générée
+
+## À savoir sur le modèle Hugging Face
+
+Le modèle distilbert-base-uncased-finetuned-sst-2-english est entraîné sur des textes en anglais uniquement.
+👉 Pour obtenir une analyse de sentiment cohérente, les tweets envoyés à l’API doivent donc être en anglais.
+
+```bash
+["I love this product", "I want to hurt someone"]  ✅ Compris
+
+["J'adore ce produit", "j’ai envie de te tuer"]   ❌ Mauvaise détection
+
+```
+
+### Auteur 
+# Youssef ALAOUI EL MRANI
