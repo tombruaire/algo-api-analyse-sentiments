@@ -1,15 +1,37 @@
-Installer l'api flask :
+#  API d'Analyse de Sentiments avec Flask, Hugging Face et MySQL
 
-- pip install flask
+Ce projet est une API Flask permettant d’analyser le sentiment de textes (tweets) à l’aide de deux modèles :
 
-Import des variables d'environnement :
+- Un modèle Hugging Face (`distilbert`)
+- Un modèle de régression logistique entraîné localement
 
-- pip install python-dotenv
+Les résultats sont enregistrés dans une base de données MySQL. Le tout fonctionne avec Docker pour garantir la portabilité.
 
-Import de transformers et hugging face pour l'analyse des sentiments en plusieurs langues
+---
 
-- pip install transformers
+## 🚀 Lancer le projet avec Docker
 
-Démarrer l'api :
+### 1. Cloner le dépôt
+```bash
+git clone https://github.com/votre-utilisateur/algo-api-analyse-sentiments.git
+cd algo-api-analyse-sentiments/api-flask
+```
 
-- python3 app.py
+### 2. Lancer Docker
+Assure-toi que Docker est installé, puis exécute :
+```bash
+docker-compose up --build
+```
+Cela va :
+
+Lancer une base de données MySQL (sentiments)
+
+Démarrer l’API Flask sur http://localhost:5001
+
+### 3. Initialisation de la base de données
+Une fois les conteneurs démarrés, exécute cette commande dans un nouveau terminal pour créer la table tweets :
+
+```bash
+docker exec -it flask-api python3 db/create_table.py
+```
+✅ Un message Table 'tweets' créée avec succès. doit s'afficher.
