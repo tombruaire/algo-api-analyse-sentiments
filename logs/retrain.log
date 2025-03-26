@@ -1,0 +1,18 @@
+réentrainement en cours......
+/Users/youssefalaouielmrani/PycharmProjects/algo-api-analyse-sentiments/algo-api-analyse-sentiments/api-flask/run_retrain.sh:2: command not found: docker
+réentrainement terminé
+réentrainement en cours......
+the input device is not a TTY
+réentrainement terminé
+réentrainement en cours......
+/app/api-flask/retrain_model.py:17: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df = pd.read_sql(query, conn)
+ Reentrainement du modèle en cours...
+Modèle réentrainé et sauvegardé avec succès dans le dossier /models.
+Nombre total de tweets utilisés pour le réentraînement : 16
+Répartition des classes :
+label
+1    14
+0     2
+Name: count, dtype: int64
+réentrainement terminé

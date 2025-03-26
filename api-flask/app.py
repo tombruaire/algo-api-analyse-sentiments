@@ -17,7 +17,7 @@ CORS(app)
 sentiment_analyser = pipeline("sentiment-analysis")
 
 # Définir les longueurs minimale et maximale des tweets
-MIN_TWEET_LENGTH = 5
+MIN_TWEET_LENGTH = 4
 MAX_TWEET_LENGTH = 280
 
 
