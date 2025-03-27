@@ -60,7 +60,7 @@ python model_training.py
 
 ✅ Le rapport de classification est affiché dans le terminal
 
-✅ Deux matrices sont générées dans logs/ :
+✅ Deux matrices sont générées dans matrice/ :
 
    matrice_positive.png : matrice centrée sur les tweets positifs
 
