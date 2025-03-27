@@ -13,7 +13,7 @@ Les résultats sont enregistrés dans une base de données MySQL. Le tout foncti
 
 ### 1. Cloner le dépôt
 ```bash
-git clone https://github.com/votre-utilisateur/algo-api-analyse-sentiments.git
+git clone -b model-logistic-regression https://github.com/tombruaire/algo-api-analyse-sentiments.git
 cd algo-api-analyse-sentiments/api-flask
 ```
 
