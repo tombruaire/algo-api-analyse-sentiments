@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  flask_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: flask-api
+    ports:
+      - "${PORT}:${PORT}"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=rootpassword
+      - MYSQL_DATABASE=sentiments
+      - FLASK_DEBUG=True
+    volumes:
+      - ..:/app
+      - ./models:/app/models
+    working_dir: /app/api-flask
+
+  db:
+    image: mysql:8
+    container_name: mysql-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: sentiments
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  mysql_data:
