@@ -54,11 +54,11 @@ print(" Accuracy:", accuracy_score(y_test, y_pred))
 print("\n Classification Report:\n", classification_report(y_test, y_pred, zero_division=0))
 
 # Créer le dossier logs s'il n'existe pas
-os.makedirs("logs", exist_ok=True)
+os.makedirs("matrice", exist_ok=True)
 
 # Sauvegarder le rapport dans logs
 report = classification_report(y_test, y_pred, zero_division=0)
-with open("logs/classification_report.txt", "w") as f:
+with open("matrice/classification_report.txt", "w") as f:
     f.write(report)
 
 # Matrice de confusion standard
@@ -73,7 +73,7 @@ plt.title("Matrice de confusion – Classe Positive")
 plt.xlabel("Prédiction")
 plt.ylabel("Valeur réelle")
 plt.tight_layout()
-plt.savefig("logs/matrice_positive.png")
+plt.savefig("matrice/matrice_positive.png")
 plt.close()
 
 # Matrice de confusion – classe NÉGATIVE (vue inversée)
@@ -85,5 +85,5 @@ plt.title("Matrice de confusion – Classe Négative")
 plt.xlabel("Prédiction")
 plt.ylabel("Valeur réelle")
 plt.tight_layout()
-plt.savefig("logs/matrice_negative.png")
+plt.savefig("matrice/matrice_negative.png")
 plt.close()
