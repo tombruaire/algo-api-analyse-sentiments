@@ -1,13 +1,22 @@
-#  API d'Analyse de Sentiments avec Flask, Hugging Face et MySQL
+# 🧠 API d'Analyse de Sentiments avec Flask, Hugging Face et MySQL
 
-Ce projet est une API Flask permettant d’analyser le sentiment de textes (tweets) à l’aide de deux modèles :
+Ce projet propose une API Flask capable d’analyser le **sentiment de tweets**, en s’appuyant sur deux types de modèles :
 
-- Un modèle Hugging Face (`distilbert`)
-- Un modèle de régression logistique entraîné localement
+- 🤖 Un modèle préentraîné Hugging Face (`distilbert`)
+- 📊 Un modèle de **régression logistique entraîné localement**
 
-Les résultats sont enregistrés dans une base de données MySQL. Le tout fonctionne avec Docker pour garantir la portabilité.
+Les résultats sont stockés dans une base MySQL. Le projet fonctionne avec **Docker** pour une portabilité optimale.
 
 ---
+
+## 🚀 Lancer le projet avec Docker
+
+### 1. Cloner le dépôt
+
+```bash
+git clone -b feat/matrice-separees https://github.com/tombruaire/algo-api-analyse-sentiments.git
+cd algo-api-analyse-sentiments/api-flask
+
 
 ## 🚀 Lancer le projet avec Docker
 
@@ -38,7 +47,7 @@ docker exec -it flask-api python3 db/create_table.py
 
 #  Entraîner un modèle et générer la matrice de confusion
 
-Un script est disponible pour entraîner un modèle de régression logistique sur les tweets déjà enregistrés dans la base de données et générer une matrice de confusion.
+Un script est disponible pour entraîner un modèle de régression logistique sur les tweets déjà enregistrés dans la base de données et générer deux matrices de confusion distinctes.
 
 ### 1. Depuis le dossier src, exécuter :
 
@@ -49,9 +58,15 @@ python model_training.py
 
 ✅ Le modèle s'entraîne automatiquement
 
-✅ Une matrice de confusion est affichée
+✅ Le rapport de classification est affiché dans le terminal
 
-✅ Une image src/matrice_confusion.png est générée
+✅ Deux matrices sont générées dans logs/ :
+
+   matrice_positive.png : matrice centrée sur les tweets positifs
+
+   matrice_negative.png : matrice centrée sur les tweets négatifs
+
+📄 Un rapport complet est disponible
 
 
 ## Réentraînement Automatique Hebdomadaire
@@ -80,9 +95,3 @@ Le modèle est entraîné sur des textes en anglais uniquement.
 ["J'adore ce produit", "j’ai envie de te tuer"]   ❌ Mauvaise détection
 
 ```
-
-
-
-
-### Auteur 
-# Youssef ALAOUI EL MRANI
