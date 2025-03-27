@@ -31,7 +31,10 @@ if df.shape[0] < 2:
 
 # Séparer les données
 X_train, X_test, y_train, y_test = train_test_split(
-    df['content'], df['label'], test_size=0.3, random_state=42
+    df['content'], df['label'],
+    test_size=0.3,
+    random_state=42,
+    stratify=df['label'] 
 )
 
 # Vectorisation TF-IDF
