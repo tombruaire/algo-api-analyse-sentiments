@@ -1,15 +1,15 @@
-# 🧠 API d'Analyse de Sentiments avec Flask, Hugging Face et MySQL
+#  API d'Analyse de Sentiments avec Flask, Hugging Face et MySQL
 
 Ce projet propose une API Flask capable d’analyser le **sentiment de tweets**, en s’appuyant sur deux types de modèles :
 
-- 🤖 Un modèle préentraîné Hugging Face (`distilbert`)
-- 📊 Un modèle de **régression logistique entraîné localement**
+-  Un modèle préentraîné Hugging Face (`distilbert`)
+-  Un modèle de **régression logistique entraîné localement**
 
 Les résultats sont stockés dans une base MySQL. Le projet fonctionne avec **Docker** pour une portabilité optimale.
 
 ---
 
-## 🚀 Lancer le projet avec Docker
+##  Lancer le projet avec Docker
 
 ### 1. Cloner le dépôt
 
@@ -18,7 +18,7 @@ git clone -b feat/matrice-separees https://github.com/tombruaire/algo-api-analys
 cd algo-api-analyse-sentiments/api-flask
 
 
-## 🚀 Lancer le projet avec Docker
+##  Lancer le projet avec Docker
 
 ### 1. Cloner le dépôt
 ```bash
@@ -87,7 +87,7 @@ Le réentraînement est automatisé chaque lundi à 9h grâce à une tâche cron
 ## À savoir sur le modèle Hugging Face
 
 Le modèle est entraîné sur des textes en anglais uniquement.
-👉 Pour obtenir une analyse de sentiment cohérente, les tweets envoyés à l’API doivent donc être en anglais.
+ Pour obtenir une analyse de sentiment cohérente, les tweets envoyés à l’API doivent donc être en anglais.
 
 ```bash
 ["I love this product", "I want to hurt someone"]  ✅ Compris
