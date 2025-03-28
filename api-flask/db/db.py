@@ -25,10 +25,10 @@ def save_tweet_to_db (content, score, model_type):
     cursor.close()
     conn.close()
 
-def get_all_tweets():
+def get_all_tweets(limit=100):
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM tweets ORDER BY created_at DESC")
+    cursor.execute("SELECT * FROM tweets ORDER BY created_at DESC LIMIT %s", (limit,))
     tweets = cursor.fetchall()
     cursor.close()
     conn.close()

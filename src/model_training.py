@@ -2,6 +2,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import mysql.connector
+import os
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
@@ -20,17 +21,20 @@ query = "SELECT content, sentiment_score FROM tweets WHERE sentiment_score IS NO
 df = pd.read_sql(query, conn)
 conn.close()
 
-# Nettoyage et préparation des labels : 1 = positif, 0 = négatif
+# Création des labels : 1 = positif, 0 = négatif
 df['label'] = df['sentiment_score'].apply(lambda x: 1 if x > 0 else 0)
 
 # Vérifie qu'on a assez de données
 if df.shape[0] < 2:
-    print("")
+    print("Pas assez de données.")
     exit()
 
 # Séparer les données
 X_train, X_test, y_train, y_test = train_test_split(
-    df['content'], df['label'], test_size=0.25, random_state=42
+    df['content'], df['label'],
+    test_size=0.3,
+    random_state=42,
+    stratify=df['label'] 
 )
 
 # Vectorisation TF-IDF
@@ -49,15 +53,37 @@ y_pred = model.predict(X_test_tfidf)
 print(" Accuracy:", accuracy_score(y_test, y_pred))
 print("\n Classification Report:\n", classification_report(y_test, y_pred, zero_division=0))
 
-# Matrice de confusion
+# Créer le dossier logs s'il n'existe pas
+os.makedirs("matrice", exist_ok=True)
+
+# Sauvegarder le rapport dans logs
+report = classification_report(y_test, y_pred, zero_division=0)
+with open("matrice/classification_report.txt", "w") as f:
+    f.write(report)
+
+# Matrice de confusion standard
 cm = confusion_matrix(y_test, y_pred)
-plt.figure(figsize=(8, 6))
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+
+# Matrice de confusion – classe POSITIVE
+plt.figure(figsize=(6, 5))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Greens',
             xticklabels=['Négatif', 'Positif'],
             yticklabels=['Négatif', 'Positif'])
-plt.xlabel('Prédiction')
-plt.ylabel('Valeur réelle')
-plt.title(' Matrice de confusion')
+plt.title("Matrice de confusion – Classe Positive")
+plt.xlabel("Prédiction")
+plt.ylabel("Valeur réelle")
 plt.tight_layout()
-plt.savefig('matrice_confusion.png')
-plt.show()
+plt.savefig("matrice/matrice_positive.png")
+plt.close()
+
+# Matrice de confusion – classe NÉGATIVE (vue inversée)
+plt.figure(figsize=(6, 5))
+sns.heatmap(cm[::-1, ::-1], annot=True, fmt='d', cmap='Blues',
+            xticklabels=['Positif', 'Négatif'],
+            yticklabels=['Positif', 'Négatif'])
+plt.title("Matrice de confusion – Classe Négative")
+plt.xlabel("Prédiction")
+plt.ylabel("Valeur réelle")
+plt.tight_layout()
+plt.savefig("matrice/matrice_negative.png")
+plt.close()

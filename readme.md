@@ -82,11 +82,6 @@ Le modèle est entraîné sur des textes en anglais uniquement.
 ```
 
 
-### Structure du projet
-
-
-on
-
 
 ### Auteur 
 # Youssef ALAOUI EL MRANI
